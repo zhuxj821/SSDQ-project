@@ -24,7 +24,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
 
 
-  <title>Academic Project Page</title>
+  <title>SSDQ</title>
   <link rel="icon" type="image/x-icon" href="static/images/favicon.ico">
   <link href="https://fonts.googleapis.com/css?family=Google+Sans|Noto+Sans|Castoro"
   rel="stylesheet">
@@ -43,6 +43,8 @@
   <script src="static/js/bulma-carousel.min.js"></script>
   <script src="static/js/bulma-slider.min.js"></script>
   <script src="static/js/index.js"></script>
+  <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+  <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
 </head>
 <body>
 
@@ -52,15 +54,18 @@
       <div class="container is-max-desktop">
         <div class="columns is-centered">
           <div class="column has-text-centered">
-            <h1 class="title is-1 publication-title">Academic Project Page</h1>
+            <h1 class="title is-1 publication-title">SSDQ: Target Speaker Extraction via Semantic and Spatial Dual Querying</h1>
             <div class="is-size-5 publication-authors">
               <!-- Paper authors -->
               <span class="author-block">
-                <a href="FIRST AUTHOR PERSONAL LINK" target="_blank">First Author</a><sup>*</sup>,</span>
+                <a href="FIRST AUTHOR PERSONAL LINK" target="_blank">Xinjia Zhu</a>,</span>
                 <span class="author-block">
-                  <a href="SECOND AUTHOR PERSONAL LINK" target="_blank">Second Author</a><sup>*</sup>,</span>
+                  <a href="SECOND AUTHOR PERSONAL LINK" target="_blank">Xinyuan Qian</a><sup>*</sup>,</span>
                   <span class="author-block">
-                    <a href="THIRD AUTHOR PERSONAL LINK" target="_blank">Third Author</a>
+                    <a href="THIRD AUTHOR PERSONAL LINK" target="_blank">Dong Liang</a>,
+                  </span>
+                  <span class="author-block">
+                    <a href="THIRD AUTHOR PERSONAL LINK" target="_blank">Tatsuya Kawahara</a>
                   </span>
                   </div>
 
@@ -124,11 +129,10 @@
 
 
 <!-- Teaser video-->
-<section class="hero teaser">
+<!-- <section class="hero teaser">
   <div class="container is-max-desktop">
     <div class="hero-body">
       <video poster="" id="tree" autoplay controls muted loop height="100%">
-        <!-- Your video here -->
         <source src="static/videos/banner_video.mp4"
         type="video/mp4">
       </video>
@@ -137,7 +141,7 @@
       </h2>
     </div>
   </div>
-</section>
+</section> -->
 <!-- End teaser video -->
 
 <!-- Paper abstract -->
@@ -148,7 +152,14 @@
         <h2 class="title is-3">Abstract</h2>
         <div class="content has-text-justified">
           <p>
-            Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin ullamcorper tellus sed ante aliquam tempus. Etiam porttitor urna feugiat nibh elementum, et tempor dolor mattis. Donec accumsan enim augue, a vulputate nisi sodales sit amet. Proin bibendum ex eget mauris cursus euismod nec et nibh. Maecenas ac gravida ante, nec cursus dui. Vivamus purus nibh, placerat ac purus eget, sagittis vestibulum metus. Sed vestibulum bibendum lectus gravida commodo. Pellentesque auctor leo vitae sagittis suscipit.
+            Target Speaker Extraction (TSE) in real-world multi-speaker environments is highly challenging.
+            Previous works have mostly relied on pre-enrollment speech to extract the target speaker's voice.
+            However, such methods are limited in spontaneous scenarios when the pre-enrollment speech is unavailable or when spatial information is not utilized.
+            To address this, we propose Semantic and Spatial Dual Querying (SSDQ), a unified framework that integrates natural language descriptions and region-based spatial queries to guide TSE.
+            SSDQ employs dual query encoders for semantic and spatial cues, fusing them into the audio stream via a Feature-wise Linear Modulation (FiLM)-based interaction module.
+            A novel Controllable Feature Wrapping (CFW) mechanism further enables dynamic balancing between speaker identity and acoustic clarity.
+            We also introduce SS-Libri, a spatialized mixture dataset designed to benchmark dual-query systems.
+            Extensive experiments demonstrate that SSDQ achieves superior extraction accuracy and robustness under challenging conditions, yielding a Scale-invariant Signal-to-Distortion Ratio improvement (SI-SDRi) of 19.63 dB, Signal-to-Noise Ratio (SNR) improvement (SNRi) of 20.30 dB, Perceptual Evaluation of Speech Quality (PESQ) of 1.83, and Short-Time Objective Intelligibility (STOI) of 0.259.
           </p>
         </div>
       </div>
@@ -165,17 +176,46 @@
       <div id="results-carousel" class="carousel results-carousel">
        <div class="item">
         <!-- Your image here -->
-        <img src="static/images/carousel1.jpg" alt="MY ALT TEXT"/>
+        <img src="static\images\1-1.png" alt="MY ALT TEXT" style="display: block; margin: 0 auto; max-width: 40%; min-width: 300px; height: auto;"/>
         <h2 class="subtitle has-text-centered">
-          First image description.
+          Our proposed TSE via semantic and spatial dual querying. 
+          The region query specifies a spatial direction, while the text query defines speaker attributes and vague direction, allowing for precise isolation of the target speaker.
         </h2>
       </div>
       <div class="item">
         <!-- Your image here -->
-        <img src="static/images/carousel2.jpg" alt="MY ALT TEXT"/>
-        <h2 class="subtitle has-text-centered">
-          Second image description.
+        <img src="static\images\2_4.png" alt="MY ALT TEXT"/>
+        <h2 class="subtitle has-text-left">
+          <b>The architecture of the proposed SSDQ network,</b> which consists of: 
+          (1) Speech Encoder encodes the input mixture speech 
+          <span>\(\textbf{y}^0(\tau)\)</span>
+          into frame-level representations 
+          <span>\(\textbf{y}_t\)</span> 
+          using Conv1D and ReLU layers;
+          (2) Spatial Feature Calculation computes the spatial cue vector 
+          <span>\(\textbf{c}_{spa}\)</span> 
+          using IPD and TPD derived from spatial samples guided by the Region Query 
+          <span>\(Q_{reg}\)</span>;
+          (3) Text Encoder encodes the Text Query 
+          <span>\(Q_{text}\)</span> 
+          into a semantic embedding 
+          <span>\(\textbf{c}_{sem}\)</span>;
+          (4) Fusion module integrates 
+          <span>\(\textbf{y}_t\)</span>, 
+          <span>\(\textbf{c}_{spa}\)</span>, and 
+          <span>\(\textbf{c}_{sem}\)</span> 
+          using <abbr title="Feature-wise Linear Modulation">FiLM</abbr>;
+          (5) Mask Estimation applies a Dual-Path Recurrent Neural Network to model both intra- and inter-chunk dependencies.
+          (6) <abbr title="Controllable Feature Wrapping">CFW</abbr> uses ResBlock1D and 
+          <abbr title="Temporal Convolutional Network">TCN</abbr> 
+          to generate a wrapped feature 
+          <span>\(\textbf{w}_t\)</span>, which is added to 
+          <span>\(\textbf{y}_t\)</span>;
+          The final target speech 
+          <span>\(\hat{\textbf{z}}(\tau)\)</span> 
+          is estimated from the wrapped features.
         </h2>
+        
       </div>
       <div class="item">
         <!-- Your image here -->
@@ -201,49 +241,49 @@
 
 
 <!-- Youtube video -->
-<section class="hero is-small is-light">
+<!-- <section class="hero is-small is-light">
   <div class="hero-body">
     <div class="container">
-      <!-- Paper video. -->
+      
       <h2 class="title is-3">Video Presentation</h2>
       <div class="columns is-centered has-text-centered">
         <div class="column is-four-fifths">
           
           <div class="publication-video">
-            <!-- Youtube embed code here -->
+            
             <iframe src="https://www.youtube.com/embed/JkaxUblCGz0" frameborder="0" allow="autoplay; encrypted-media" allowfullscreen></iframe>
           </div>
         </div>
       </div>
     </div>
   </div>
-</section>
+</section> -->
 <!-- End youtube video -->
 
 
 <!-- Video carousel -->
-<section class="hero is-small">
+<!-- <section class="hero is-small">
   <div class="hero-body">
     <div class="container">
       <h2 class="title is-3">Another Carousel</h2>
       <div id="results-carousel" class="carousel results-carousel">
         <div class="item item-video1">
           <video poster="" id="video1" autoplay controls muted loop height="100%">
-            <!-- Your video file here -->
+            
             <source src="static/videos/carousel1.mp4"
             type="video/mp4">
           </video>
         </div>
         <div class="item item-video2">
           <video poster="" id="video2" autoplay controls muted loop height="100%">
-            <!-- Your video file here -->
+            
             <source src="static/videos/carousel2.mp4"
             type="video/mp4">
           </video>
         </div>
         <div class="item item-video3">
           <video poster="" id="video3" autoplay controls muted loop height="100%">\
-            <!-- Your video file here -->
+            
             <source src="static/videos/carousel3.mp4"
             type="video/mp4">
           </video>
@@ -251,7 +291,7 @@
       </div>
     </div>
   </div>
-</section>
+</section> -->
 <!-- End video carousel -->
 
 
